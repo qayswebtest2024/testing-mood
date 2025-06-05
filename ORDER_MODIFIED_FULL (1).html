@@ -2010,7 +2010,7 @@ async function saveOrderToGoogleSheets(orderData) {
             
             // إنشاء بيانات الطلب
             const orderData = {
-                date: new Date().toLocaleString('ar-SA'),
+                date: new Date().toLocaleString('en-GB'),
                 employee: currentUser.name,
                 customerName: customerNameInput.value,
                 customerPhone: customerPhoneInput.value,
@@ -2061,7 +2061,7 @@ async function saveOrderToGoogleSheets(orderData) {
             const receiptNotes = document.getElementById('receipt-notes');
             
             // تحديث البيانات
-            receiptDate.textContent = new Date().toLocaleString('ar-SA');
+            receiptDate.textContent = new Date().toLocaleString('en-GB');
             receiptNumber.textContent = `#${Math.floor(1000 + Math.random() * 9000)}`;
             receiptCustomerName.textContent = orderData.customerName || 'غير محدد';
             receiptCustomerPhone.textContent = orderData.customerPhone || 'غير محدد';
