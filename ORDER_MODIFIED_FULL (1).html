@@ -453,9 +453,10 @@
             flex: 1;
         }
         
+        /* التعديل الرئيسي: جعل بطاقات المنتجات مشابهة لبطاقات المجموعات */
         .product-card {
             background: white;
-            border-radius: 8px;
+            border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 3px 8px rgba(0,0,0,0.08);
             transition: all 0.3s ease;
@@ -465,6 +466,8 @@
             flex-direction: column;
             height: 100%;
             transform: translateY(0);
+            text-align: center;
+            padding: 15px;
         }
         
         .product-card:hover {
@@ -474,34 +477,39 @@
         }
         
         .product-info {
-            padding: 15px;
+            padding: 5px;
             flex: 1;
             display: flex;
             flex-direction: column;
+            justify-content: center;
         }
         
         .product-name {
             font-weight: 600;
             margin-bottom: 5px;
-            font-size: 16px;
+            font-size: 15px;
             line-height: 1.4;
+            height: 40px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
         }
         
         .product-category {
             color: var(--gray);
-            font-size: 13px;
-            margin-bottom: 10px;
+            font-size: 12px;
+            margin-bottom: 8px;
         }
         
         .product-price {
             color: var(--primary);
             font-weight: bold;
-            font-size: 18px;
+            font-size: 16px;
             margin-top: auto;
         }
         
         .product-stock {
-            font-size: 13px;
+            font-size: 11px;
             color: var(--gray);
             margin-top: 3px;
         }
@@ -1310,6 +1318,60 @@
         .back-to-categories:hover {
             background-color: #f0f0f0;
         }
+        
+        /* التعديل: جعل بطاقات المنتجات مشابهة لبطاقات المجموعات */
+        .products-in-category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            padding: 15px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        
+        .products-in-category-grid .product-card {
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: 2px solid #eee;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .products-in-category-grid .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+        
+        .products-in-category-grid .product-info {
+            padding: 10px 0 0;
+        }
+        
+        .products-in-category-grid .product-name {
+            font-size: 14px;
+            height: auto;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+        
+        .products-in-category-grid .product-price {
+            font-size: 15px;
+            margin-top: 5px;
+        }
+        
+        .products-in-category-grid .product-stock {
+            font-size: 10px;
+            margin-top: 5px;
+        }
     </style>
 
     <!-- Firebase Realtime Database -->
@@ -1904,9 +1966,9 @@
                 renderCategories();
             });
             
-            // إنشاء عنصر لعرض المنتجات
+            // إنشاء عنصر لعرض المنتجات بنفس نمط المجموعات
             const productsGrid = document.createElement('div');
-            productsGrid.className = 'products-grid';
+            productsGrid.className = 'products-in-category-grid';
             productsGrid.id = 'products-container';
             
             // تصفية المنتجات حسب الفئة
@@ -1915,7 +1977,7 @@
             );
             
             // عرض المنتجات
-            renderProducts(filteredProducts, productsGrid);
+            renderProductsInCategory(filteredProducts, productsGrid);
             
             // تحديث واجهة المستخدم
             categoryLayout.innerHTML = '';
@@ -1923,8 +1985,8 @@
             categoryLayout.appendChild(productsGrid);
         }
         
-        // عرض المنتجات في الصفحة
-        function renderProducts(productsArray, container = productsContainer) {
+        // عرض المنتجات في الصفحة بنمط المجموعات
+        function renderProductsInCategory(productsArray, container) {
             container.innerHTML = '';
             
             if (productsArray.length === 0) {
@@ -1946,7 +2008,6 @@
                 productElement.innerHTML = `
                     <div class="product-info">
                         <div class="product-name">${product.name}</div>
-                        <div class="product-category">${product.category}</div>
                         <div class="product-price">${parseFloat(product.price).toFixed(2)} د.أ</div>
                         <div class="product-stock ${stockStatus.class}">${stockStatus.text}</div>
                     </div>
