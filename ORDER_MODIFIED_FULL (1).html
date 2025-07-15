@@ -167,8 +167,8 @@
         
         .dashboard-card {
             position: absolute;
-top: 30%;
-left: 30%;
+            top: 30%;
+            left: 30%;
             background: white;
             border-radius: 15px;
             padding: 40px 30px;
@@ -1138,8 +1138,8 @@ left: 30%;
         
         .note-content {
             position: absolute;
-top: 38%;
-left: 30%;
+            top: 38%;
+            left: 30%;
             background: white;
             border-radius: 10px;
             padding: 20px;
@@ -2415,9 +2415,9 @@ left: 30%;
             const tax = subtotal * 0;
             const total = subtotal + tax;
             
-            // إنشاء بيانات الطلب
+            // إنشاء بيانات الطلب - حل مشكلة التاريخ
             const orderData = {
-                date: new Date().toLocaleString('en-GB'),
+                date: new Date().toISOString(), // تنسيق ISO صالح لـ Firebase
                 employee: currentUser.name,
                 customerName: customerNameInput.value,
                 customerPhone: customerPhoneInput.value,
@@ -2428,7 +2428,7 @@ left: 30%;
                     name: item.name,
                     price: item.customPrice !== null ? item.customPrice : item.price,
                     quantity: item.quantity,
-                    note: item.note || "" // ملاحظة المنتج
+                    note: item.note || ""
                 })),
                 subtotal: subtotal.toFixed(2),
                 tax: tax.toFixed(2),
@@ -2462,7 +2462,7 @@ left: 30%;
             }
         }
         
-        // توليد فاتورة للطباعة
+        // توليد فاتورة للطباعة - حل مشكلة التاريخ
         function generateReceipt(orderData) {
             const receipt = document.getElementById('print-receipt');
             const receiptItems = document.getElementById('receipt-items');
@@ -2474,8 +2474,12 @@ left: 30%;
             const receiptPaymentMethod = document.getElementById('receipt-payment-method');
             const receiptNotes = document.getElementById('receipt-notes');
             
+            // تحويل التاريخ من تنسيق ISO إلى تنسيق قابل للقراءة
+            const dateObj = new Date(orderData.date);
+            const formattedDate = `${dateObj.getDate()}/${dateObj.getMonth() + 1}/${dateObj.getFullYear()} ${dateObj.getHours()}:${dateObj.getMinutes().toString().padStart(2, '0')}:${dateObj.getSeconds().toString().padStart(2, '0')}`;
+            
             // تحديث البيانات
-            receiptDate.textContent = new Date().toLocaleString('en-GB');
+            receiptDate.textContent = formattedDate;
             receiptNumber.textContent = `#${Math.floor(1000 + Math.random() * 9000)}`;
             receiptCustomerName.textContent = orderData.customerName || 'غير محدد';
             receiptCustomerPhone.textContent = orderData.customerPhone || 'غير محدد';
@@ -2527,6 +2531,7 @@ left: 30%;
                 
                 // إنشاء بيانات الطلب للطباعة
                 const orderData = {
+                    date: new Date().toISOString(),
                     customerName: customerNameInput.value,
                     customerPhone: customerPhoneInput.value,
                     deliveryArea: deliveryAreaSelect.value,
