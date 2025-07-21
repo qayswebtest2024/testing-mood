@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -1379,6 +1380,129 @@
             font-size: 10px;
             margin-top: 5px;
         }
+
+        /* أنماط جديدة لعرض بيانات الطلب السابق */
+        .previous-order-container {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+            display: none;
+            position: relative;
+            grid-column: 1 / -1;
+        }
+        
+        .previous-order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .previous-order-title {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 16px;
+        }
+        
+        .close-order-info {
+            background: none;
+            border: none;
+            color: #999;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        
+        .order-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .order-detail-item {
+            margin-bottom: 8px;
+        }
+        
+        .order-detail-label {
+            font-weight: 600;
+            color: var(--secondary);
+            font-size: 13px;
+        }
+        
+        .order-detail-value {
+            font-size: 14px;
+        }
+        
+        .order-items-title {
+            font-weight: bold;
+            margin: 10px 0 5px;
+            color: var(--secondary);
+        }
+        
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+            border-bottom: 1px dashed #eee;
+            font-size: 13px;
+        }
+        
+        .item-name {
+            flex: 1;
+        }
+        
+        .item-qty {
+            margin: 0 10px;
+            color: var(--primary);
+        }
+        
+        .item-price {
+            min-width: 60px;
+            text-align: left;
+        }
+        
+        .autofill-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .autofill-btn:hover {
+            background: var(--primary-dark);
+        }
+        
+        .order-info-loading {
+            text-align: center;
+            padding: 20px;
+            color: var(--gray);
+        }
+        
+        .highlight-box {
+            border: 2px solid var(--primary);
+            animation: pulse-border 2s infinite;
+            border-radius: 8px;
+        }
+        
+        @keyframes pulse-border {
+            0% { border-color: var(--primary); }
+            50% { border-color: rgba(167, 34, 69, 0.5); }
+            100% { border-color: var(--primary); }
+        }
     </style>
 
     <!-- Firebase Realtime Database -->
@@ -1436,8 +1560,49 @@
           }, 1000);
         }
       }
+      
+      // Function to search for previous orders by phone number
+      async function searchPreviousOrders(phone) {
+        try {
+          document.getElementById('previous-order-container').innerHTML = `
+            <div class="order-info-loading">
+              <i class="fas fa-spinner fa-spin"></i>
+              <p>جاري البحث عن طلبات سابقة...</p>
+            </div>
+          `;
+          document.getElementById('previous-order-container').style.display = 'block';
+          
+          const ordersRef = database.ref("orders");
+          const snapshot = await ordersRef.orderByChild('customerPhone').equalTo(phone).once('value');
+          
+          if (snapshot.exists()) {
+            const orders = [];
+            snapshot.forEach(childSnapshot => {
+              orders.push({
+                id: childSnapshot.key,
+                ...childSnapshot.val()
+              });
+            });
+            
+            // Sort orders by date (newest first)
+            orders.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            // Get the latest order
+            const latestOrder = orders[0];
+            displayPreviousOrder(latestOrder);
+          } else {
+            document.getElementById('previous-order-container').innerHTML = `
+              <p>لا توجد طلبات سابقة لهذا الرقم</p>
+            `;
+          }
+        } catch (error) {
+          console.error('Error searching orders:', error);
+          document.getElementById('previous-order-container').innerHTML = `
+            <p class="error">حدث خطأ أثناء البحث عن الطلبات السابقة</p>
+          `;
+        }
+      }
     </script>
-
 </head>
 <body>
     <!-- شريط التقدم -->
@@ -1512,8 +1677,14 @@
                     </div>
                     <div class="customer-field">
                         <label for="customer-phone">رقم الهاتف</label>
-                        <input type="tel" id="customer-phone" placeholder="07XXXXXXXX">
+                        <input type="tel" id="customer-phone" placeholder="07XXXXXXXX" class="highlight-box">
                     </div>
+                    
+                    <!-- Container for previous order information -->
+                    <div id="previous-order-container" class="previous-order-container">
+                        <!-- سيتم تعبئته ديناميكياً عند البحث -->
+                    </div>
+                    
                     <div class="customer-field">
                         <label for="delivery-area">منطقة التوصيل</label>
                         <input type="text" id="delivery-area" placeholder="اكتب منطقة التوصيل">
@@ -1869,10 +2040,11 @@
         const categoryLayout = document.getElementById('category-layout');
         const deliveryAreaInput = document.getElementById('delivery-area');
         const deliveryAreasList = document.getElementById('delivery-areas-list');
+        const customerPhoneInput = document.getElementById('customer-phone');
+        const previousOrderContainer = document.getElementById('previous-order-container');
         
         // عناصر بيانات العميل
         const customerNameInput = document.getElementById('customer-name');
-        const customerPhoneInput = document.getElementById('customer-phone');
         const paymentMethodSelect = document.getElementById('payment-method');
         const notesTextarea = document.getElementById('notes');
         
@@ -2578,6 +2750,105 @@
             receipt.classList.remove('hidden');
         }
         
+        // دالة لعرض بيانات الطلب السابق
+        function displayPreviousOrder(order) {
+            // تحويل التاريخ إلى تنسيق مقروء
+            const orderDate = new Date(order.date);
+            const formattedDate = orderDate.toLocaleString('ar-EG', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            // إنشاء قائمة بالمنتجات
+            let itemsHtml = '';
+            order.items.forEach(item => {
+                itemsHtml += `
+                    <div class="order-item">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-qty">${item.quantity}x</div>
+                        <div class="item-price">${item.price.toFixed(2)} د.أ</div>
+                    </div>
+                `;
+            });
+            
+            // بناء واجهة عرض الطلب
+            previousOrderContainer.innerHTML = `
+                <div class="previous-order-header">
+                    <div class="previous-order-title">آخر طلب للعميل</div>
+                    <button class="close-order-info">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="order-details-grid">
+                    <div class="order-detail-item">
+                        <div class="order-detail-label">التاريخ</div>
+                        <div class="order-detail-value">${formattedDate}</div>
+                    </div>
+                    <div class="order-detail-item">
+                        <div class="order-detail-label">المنطقة</div>
+                        <div class="order-detail-value">${order.deliveryArea || 'غير محدد'}</div>
+                    </div>
+                    <div class="order-detail-item">
+                        <div class="order-detail-label">طريقة الدفع</div>
+                        <div class="order-detail-value">${order.paymentMethod || 'غير محدد'}</div>
+                    </div>
+                    <div class="order-detail-item">
+                        <div class="order-detail-label">الإجمالي</div>
+                        <div class="order-detail-value">${order.total} د.أ</div>
+                    </div>
+                </div>
+                
+                <div class="order-detail-item">
+                    <div class="order-detail-label">ملاحظات</div>
+                    <div class="order-detail-value">${order.notes || 'لا توجد ملاحظات'}</div>
+                </div>
+                
+                <div class="order-items-title">المنتجات:</div>
+                <div class="order-items-list">
+                    ${itemsHtml}
+                </div>
+                
+                <button class="autofill-btn" id="autofill-btn">
+                    <i class="fas fa-magic"></i> تعبئة بيانات الطلب السابق
+                </button>
+            `;
+            
+            // إضافة مستمع الأحداث لزر الإغلاق
+            document.querySelector('.close-order-info').addEventListener('click', () => {
+                previousOrderContainer.style.display = 'none';
+            });
+            
+            // إضافة مستمع الأحداث لزر التعبئة التلقائية
+            document.getElementById('autofill-btn').addEventListener('click', () => {
+                autofillCustomerData(order);
+            });
+        }
+        
+        // دالة لتعبئة بيانات العميل تلقائياً
+        function autofillCustomerData(order) {
+            document.getElementById('customer-name').value = order.customerName || '';
+            document.getElementById('delivery-area').value = order.deliveryArea || '';
+            document.getElementById('payment-method').value = order.paymentMethod || '';
+            document.getElementById('notes').value = order.notes || '';
+            
+            // إظهار رسالة تأكيد
+            showNotification('تم تعبئة بيانات العميل من آخر طلب', 'success');
+            
+            // إضافة تأثير تمييز للحقول المعبأة
+            const fields = ['customer-name', 'delivery-area', 'payment-method', 'notes'];
+            fields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                field.classList.add('highlight-box');
+                setTimeout(() => {
+                    field.classList.remove('highlight-box');
+                }, 3000);
+            });
+        }
+        
         // بدء تشغيل التطبيق عند تحميل الصفحة
         document.addEventListener('DOMContentLoaded', () => {
             // تسجيل الدخول
@@ -2673,11 +2944,68 @@
             // تحديث قيمة التوصيل عند تغيير المنطقة
             deliveryAreaInput.addEventListener('input', updateDeliveryFee);
             
+            // البحث عن الطلبات السابقة عند تغيير رقم الهاتف
+            customerPhoneInput.addEventListener('input', function() {
+                const phone = this.value.trim();
+                if (phone.length >= 8) {
+                    searchPreviousOrders(phone);
+                } else {
+                    previousOrderContainer.style.display = 'none';
+                }
+            });
+            
+            // إخفاء معلومات الطلب السابق عند الضغط خارجها
+            document.addEventListener('click', (e) => {
+                if (!previousOrderContainer.contains(e.target) && 
+                    e.target !== customerPhoneInput &&
+                    previousOrderContainer.style.display === 'block') {
+                    previousOrderContainer.style.display = 'none';
+                }
+            });
+            
             // إخفاء فاتورة الطباعة بعد الطباعة
             window.addEventListener('afterprint', () => {
                 document.getElementById('print-receipt').classList.add('hidden');
             });
         });
     </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
 </body>
 </html>
