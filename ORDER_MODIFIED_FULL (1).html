@@ -1516,84 +1516,10 @@
                     </div>
                     <div class="customer-field">
                         <label for="delivery-area">منطقة التوصيل</label>
-                        <select id="delivery-area">
-                            <option value="">اختر منطقة التوصيل</option>
-                            <option value="صويلح">صويلح</option>
-                            <option value="دابوق">دابوق</option>
-                            <option value="خلدا">خلدا</option>
-                            <option value="تلاع العلي">تلاع العلي</option>
-                            <option value="ام السماق">ام السماق</option>
-                            <option value="ضاحية الرشيد">ضاحية الرشيد</option>
-                            <option value="الكمالية">الكمالية</option>
-                            <option value="المدينة الطبية">المدينة الطبية</option>
-                            <option value="شارع الجامعة">شارع الجامعة</option>
-                            <option value="دوار الواحة">دوار الواحة</option>
-                            <option value="حدائق الحسين">حدائق الحسين</option>
-                            <option value="ضاحية الروضة">ضاحية الروضة</option>
-                            <option value="الجبيهة">الجبيهة</option>
-                            <option value="الجاردنز">الجاردنز</option>
-                            <option value="صافوط">صافوط</option>
-                            <option value="الرابية">الرابية</option>
-                            <option value="الدوار السابع">الدوار السابع</option>
-                            <option value="الدوار الثامن">الدوار الثامن</option>
-                            <option value="البيادر">البيادر</option>
-                            <option value="الجندويل">الجندويل</option>
-                            <option value="الكرسي">الكرسي</option>
-                            <option value="الشميساني">الشميساني</option>
-                            <option value="الامير راشد">الامير راشد</option>
-                            <option value="بدر الجديدة">بدر الجديدة</option>
-                            <option value="الدوار الرابع">الدوار الرابع</option>
-                            <option value="الدوار الخامس">الدوار الخامس</option>
-                            <option value="الدوار السادس">الدوار السادس</option>
-                            <option value="حي المنصور">حي المنصور</option>
-                            <option value="الصويفية">الصويفية</option>
-                            <option value="ام اذينة">ام اذينة</option>
-                            <option value="الفحيص">الفحيص</option>
-                            <option value="ماحص">ماحص</option>
-                            <option value="الدوار الثالث">الدوار الثالث</option>
-                            <option value="وادي صقرة">وادي صقرة</option>
-                            <option value="العبدلي">العبدلي</option>
-                            <option value="عبدون">عبدون</option>
-                            <option value="دير غبار">دير غبار</option>
-                            <option value="شفا بدران">شفا بدران</option>
-                            <option value="ابو نصير">ابو نصير</option>
-                            <option value="ضاحية النخيل">ضاحية النخيل</option>
-                            <option value="الظهير">الظهير</option>
-                            <option value="عين الباشا">عين الباشا</option>
-                            <option value="عرجان">عرجان</option>
-                            <option value="م.الرياضية">م.الرياضية</option>
-                            <option value="مرج الحمام">مرج الحمام</option>
-                            <option value="الدوار الثاني">الدوار الثاني</option>
-                            <option value="الدوار الاول">الدوار الاول</option>
-                            <option value="جبل الحسين">جبل الحسين</option>
-                            <option value="الاقصى">الاقصى</option>
-                            <option value="الياسمين">الياسمين</option>
-                            <option value="الهاشمي الشمالي">الهاشمي الشمالي</option>
-                            <option value="جبل النزهة">جبل النزهة</option>
-                            <option value="ابو عليا">ابو عليا</option>
-                            <option value="طبربور">طبربور</option>
-                            <option value="الامير حسن">الامير حسن</option>
-                            <option value="جبل النصر">جبل النصر</option>
-                            <option value="عدن">عدن</option>
-                            <option value="حي نزال">حي نزال</option>
-                            <option value="جبل الأخضر">جبل الأخضر</option>
-                            <option value="المقابلين">المقابلين</option>
-                            <option value="جبل الزهور">جبل الزهور</option>
-                            <option value="البنيات">البنيات</option>
-                            <option value="عراق الأمير">عراق الأمير</option>
-                            <option value="ضاحية الحاج حسن">ضاحية الحاج حسن</option>
-                            <option value="شارع الحرية">شارع الحرية</option>
-                            <option value="المنارة">المنارة</option>
-                            <option value="ام النواره">ام النواره</option>
-                            <option value="الوحدات">الوحدات</option>
-                            <option value="أبو علندا">أبو علندا</option>
-                            <option value="جاوا">جاوا</option>
-                            <option value="الجويدة">الجويدة</option>
-                            <option value="خريبة السوق">خريبة السوق</option>
-                            <option value="ماركا الشمالية">ماركا الشمالية</option>
-                            <option value="ماركا الجنوبية">ماركا الجنوبية</option>
-                            <option value="القويسمة">القويسمة</option>
-                        </select>
+                        <input type="text" id="delivery-area" placeholder="اكتب منطقة التوصيل">
+                        <datalist id="delivery-areas-list">
+                            <!-- سيتم ملؤها بالمناطق من خلال JavaScript -->
+                        </datalist>
                     </div>
                     <div class="customer-field">
                         <label for="payment-method">طريقة الدفع</label>
@@ -1638,6 +1564,10 @@
                         <div class="summary-row">
                             <span class="summary-label">الضريبة (0%)</span>
                             <span class="summary-value" id="tax">0.00 د.أ</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="summary-label">قيمة التوصيل</span>
+                            <span class="summary-value" id="delivery-fee">0.00 د.أ</span>
                         </div>
                         <div class="summary-row">
                             <span class="summary-label">خصم</span>
@@ -1800,6 +1730,8 @@
         let currentNoteItemId = null;
         let currentCategory = null;
         let searchTimeout = null;
+        let deliveryFee = 0.00; // قيمة التوصيل
+        let deliveryDiscount = 0.00; // قيمة الخصم على التوصيل
         
         // تعريف المجموعات والتصنيفات الفرعية
         const groups = {
@@ -1822,6 +1754,87 @@
             "قطيرة": ["قطيرة"]
         };
         
+        // أسعار التوصيل للمناطق المختلفة
+        const deliveryPrices = {
+            "صويلح": 2.00,
+            "دابوق": 2.00,
+            "خلدا": 2.00,
+            "تلاع العلي": 2.50,
+            "ام السماق": 2.50,
+            "الكمالية": 2.50,
+            "المدينة الطبية": 2.50,
+            "شارع الجامعة": 2.50,
+            "دوار الواحة": 2.50,
+            "حدائق الحسين": 2.50,
+            "ضاحية الرشيد": 3.00,
+            "ضاحية الروضة": 3.00,
+            "الجبيهة": 3.00,
+            "الجاردنز": 3.00,
+            "صافوط": 3.00,
+            "الرابية": 3.00,
+            "الدوار السابع": 3.00,
+            "الدوار الثامن": 3.00,
+            "البيادر": 3.00,
+            "الجندويل": 3.00,
+            "الكرسي": 3.00,
+            "الشميساني": 3.00,
+            "الامير راشد": 3.00,
+            "بدر الجديدة": 3.50,
+            "الدوار الرابع": 3.50,
+            "الدوار الخامس": 3.50,
+            "الدوار السادس": 3.50,
+            "حي المنصور": 3.50,
+            "الصويفية": 3.50,
+            "ام اذينة": 3.50,
+            "الفحيص": 4.00,
+            "ماحص": 4.00,
+            "الدوار الثالث": 4.00,
+            "وادي صقرة": 4.00,
+            "العبدلي": 4.00,
+            "عبدون": 4.00,
+            "دير غبار": 4.00,
+            "شفا بدران": 4.00,
+            "ابو نصير": 4.00,
+            "ضاحية النخيل": 4.00,
+            "الظهير": 4.00,
+            "عين الباشا": 4.00,
+            "عرجان": 4.00,
+            "المدينة الرياضية": 4.00,
+            "مرج الحمام": 5.00,
+            "الدوار الثاني": 5.00,
+            "الدوار الاول": 5.00,
+            "جبل الحسين": 5.00,
+            "ضاحية الاقصى": 5.00,
+            "ضاحية الياسمين": 5.00,
+            "الهاشمي الشمالي": 5.00,
+            "جبل النزهة": 5.00,
+            "ابوعليا": 5.00,
+            "طبربور": 5.00,
+            "ضاحية الاميرحسن": 5.00,
+            "جبل النصر": 6.00,
+            "عدن": 6.00,
+            "حي نزال": 6.00,
+            "جبل الأخضر": 6.00,
+            "المقابلين": 6.00,
+            "جبل الزهور": 6.00,
+            "البنيات": 6.00,
+            "عراق الأمير": 6.00,
+            "ضاحية الحاج حسن": 6.00,
+            "شارع الحرية": 6.00,
+            "المنارة": 6.00,
+            "ام النواره": 6.00,
+            "الوحدات": 6.00,
+            "أبو علندا": 7.00,
+            "جاوا": 7.00,
+            "الجويدة": 7.00,
+            "خريبة السوق": 7.00,
+            "ماركا الشمالية": 7.00,
+            "ماركا الجنوبية": 7.00,
+            "القويسمة": 7.00,
+            "الجبل الشمالي": 9.00,
+            "الرصيفة": 9.00
+        };
+        
         // عناصر DOM
         const loginContainer = document.getElementById('login-container');
         const dashboardContainer = document.getElementById('dashboard-container');
@@ -1835,6 +1848,7 @@
         const searchInput = document.getElementById('search-input');
         const subtotalElement = document.getElementById('subtotal');
         const taxElement = document.getElementById('tax');
+        const deliveryFeeElement = document.getElementById('delivery-fee');
         const discountElement = document.getElementById('discount');
         const totalElement = document.getElementById('total');
         const checkoutBtn = document.getElementById('checkout-btn');
@@ -1853,11 +1867,12 @@
         const cancelNoteBtn = document.getElementById('cancel-note-btn');
         const categoriesContainer = document.getElementById('categories-container');
         const categoryLayout = document.getElementById('category-layout');
+        const deliveryAreaInput = document.getElementById('delivery-area');
+        const deliveryAreasList = document.getElementById('delivery-areas-list');
         
         // عناصر بيانات العميل
         const customerNameInput = document.getElementById('customer-name');
         const customerPhoneInput = document.getElementById('customer-phone');
-        const deliveryAreaSelect = document.getElementById('delivery-area');
         const paymentMethodSelect = document.getElementById('payment-method');
         const notesTextarea = document.getElementById('notes');
         
@@ -1888,6 +1903,17 @@
             dashboardContainer.classList.add('hidden');
             posContainer.classList.remove('hidden');
             loadProductsFromGoogleSheets();
+            populateDeliveryAreas();
+        }
+        
+        // تعبئة قائمة المناطق في حقل التوصيل
+        function populateDeliveryAreas() {
+            deliveryAreasList.innerHTML = '';
+            Object.keys(deliveryPrices).forEach(area => {
+                const option = document.createElement('option');
+                option.value = area;
+                deliveryAreasList.appendChild(option);
+            });
         }
         
         // العودة إلى لوحة التحكم
@@ -1895,6 +1921,8 @@
             posContainer.classList.add('hidden');
             dashboardContainer.classList.remove('hidden');
             cart = [];
+            deliveryFee = 0.00;
+            deliveryDiscount = 0.00;
             updateCartDisplay();
             updateCartSummary();
         }
@@ -2069,6 +2097,7 @@
             showNotification(`تم إضافة "${product.name}" إلى السلة`, 'success');
             updateCartDisplay();
             updateCartSummary();
+            updateDeliveryFee(); // تحديث قيمة التوصيل
         }
         
         // تحديث عرض السلة
@@ -2226,6 +2255,7 @@
             
             updateCartDisplay();
             updateCartSummary();
+            updateDeliveryFee(); // تحديث قيمة التوصيل
         }
         
         // إزالة منتج من السلة
@@ -2238,6 +2268,41 @@
             }
             updateCartDisplay();
             updateCartSummary();
+            updateDeliveryFee(); // تحديث قيمة التوصيل
+        }
+        
+        // تحديث قيمة التوصيل والخصم
+        function updateDeliveryFee() {
+            const area = deliveryAreaInput.value.trim();
+            
+            // إعادة تعيين القيم
+            deliveryFee = 0.00;
+            deliveryDiscount = 0.00;
+            
+            // إذا تم اختيار منطقة
+            if (area && deliveryPrices.hasOwnProperty(area)) {
+                // حساب المجموع الفرعي
+                const subtotal = cart.reduce((sum, item) => {
+                    const price = item.customPrice !== null ? item.customPrice : item.price;
+                    return sum + (price * item.quantity);
+                }, 0);
+                
+                // الحصول على سعر التوصيل الأساسي
+                deliveryFee = deliveryPrices[area];
+                
+                // تطبيق الخصم حسب قيمة الطلب
+                if (subtotal >= 15) {
+                    deliveryDiscount = 3.00;
+                } else if (subtotal >= 10) {
+                    deliveryDiscount = 2.00;
+                }
+                
+                // تطبيق الخصم على التوصيل
+                deliveryFee = Math.max(0, deliveryFee - deliveryDiscount);
+            }
+            
+            // تحديث ملخص السلة
+            updateCartSummary();
         }
         
         // تحديث ملخص السلة
@@ -2249,10 +2314,11 @@
             
             const tax = subtotal * 0;
             const discount = 0;
-            const total = subtotal + tax - discount;
+            const total = subtotal + tax - discount + deliveryFee;
             
             subtotalElement.textContent = subtotal.toFixed(2) + ' د.أ';
             taxElement.textContent = tax.toFixed(2) + ' د.أ';
+            deliveryFeeElement.textContent = deliveryFee.toFixed(2) + ' د.أ';
             discountElement.textContent = discount.toFixed(2) + ' د.أ';
             totalElement.textContent = total.toFixed(2) + ' د.أ';
         }
@@ -2294,6 +2360,7 @@
             selectedCartItem.quantity = quantity;
             updateCartDisplay();
             updateCartSummary();
+            updateDeliveryFee(); // تحديث قيمة التوصيل
             showNotification(`تم تحديث الكمية لـ "${selectedCartItem.name}"`, 'success');
         }
         
@@ -2313,6 +2380,7 @@
             selectedCartItem.customPrice = price;
             updateCartDisplay();
             updateCartSummary();
+            updateDeliveryFee(); // تحديث قيمة التوصيل
             showNotification(`تم تحديث السعر لـ "${selectedCartItem.name}"`, 'success');
         }
         
@@ -2413,7 +2481,8 @@
             }, 0);
             
             const tax = subtotal * 0;
-            const total = subtotal + tax;
+            const discount = 0;
+            const total = subtotal + tax - discount + deliveryFee;
             
             // إنشاء بيانات الطلب - حل مشكلة التاريخ
             const orderData = {
@@ -2421,7 +2490,7 @@
                 employee: currentUser.name,
                 customerName: customerNameInput.value,
                 customerPhone: customerPhoneInput.value,
-                deliveryArea: deliveryAreaSelect.value,
+                deliveryArea: deliveryAreaInput.value,
                 paymentMethod: paymentMethodSelect.value,
                 notes: notesTextarea.value,
                 items: cart.map(item => ({
@@ -2432,6 +2501,8 @@
                 })),
                 subtotal: subtotal.toFixed(2),
                 tax: tax.toFixed(2),
+                deliveryFee: deliveryFee.toFixed(2),
+                discount: discount.toFixed(2),
                 total: total.toFixed(2)
             };
             
@@ -2443,6 +2514,8 @@
                 cart = [];
                 selectedCartItem = null;
                 currentInput = "0";
+                deliveryFee = 0.00;
+                deliveryDiscount = 0.00;
                 keypadDisplay.textContent = currentInput;
                 updateCartDisplay();
                 updateCartSummary();
@@ -2450,7 +2523,7 @@
                 // إعادة تعيين حقول العميل
                 customerNameInput.value = '';
                 customerPhoneInput.value = '';
-                deliveryAreaSelect.value = '';
+                deliveryAreaInput.value = '';
                 paymentMethodSelect.value = '';
                 notesTextarea.value = '';
                 
@@ -2534,7 +2607,7 @@
                     date: new Date().toISOString(),
                     customerName: customerNameInput.value,
                     customerPhone: customerPhoneInput.value,
-                    deliveryArea: deliveryAreaSelect.value,
+                    deliveryArea: deliveryAreaInput.value,
                     paymentMethod: paymentMethodSelect.value,
                     notes: notesTextarea.value,
                     items: cart.map(item => ({
@@ -2545,6 +2618,8 @@
                     })),
                     subtotal: parseFloat(subtotalElement.textContent),
                     tax: parseFloat(taxElement.textContent),
+                    deliveryFee: deliveryFee,
+                    discount: parseFloat(discountElement.textContent),
                     total: parseFloat(totalElement.textContent)
                 };
                 
@@ -2594,6 +2669,9 @@
             // ملاحظات المنتج
             saveNoteBtn.addEventListener('click', saveProductNote);
             cancelNoteBtn.addEventListener('click', cancelNote);
+            
+            // تحديث قيمة التوصيل عند تغيير المنطقة
+            deliveryAreaInput.addEventListener('input', updateDeliveryFee);
             
             // إخفاء فاتورة الطباعة بعد الطباعة
             window.addEventListener('afterprint', () => {
